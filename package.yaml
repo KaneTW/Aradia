@@ -1,0 +1,60 @@
+name: aradia
+version: '0.1.0.0'
+category: Discord
+author: David Kraeutmann
+maintainer: kane@kane.cx
+copyright: 2017 David Kraeutmann
+license: BSD3
+github: KaneTW/aradia
+extra-source-files:
+- README.md
+
+default-extensions:
+  - FlexibleContexts
+  - FlexibleInstances
+  - MultiParamTypeClasses
+  - FunctionalDependencies
+  - TypeFamilies
+  - TemplateHaskell
+  - GeneralizedNewtypeDeriving
+  - OverloadedStrings
+  - TypeOperators
+library:
+  source-dirs: src
+  exposed-modules:
+  - Aradia
+  - Aradia.Command
+  - Aradia.Types
+  dependencies:          
+  - base >=4.7 && <5
+  - aradia-discord-hs >=0.4 && <0.5
+  - pipes >=4.3 && <4.4  
+  - text >=1.2 && <1.3
+  - lens >=4.15 && <4.16
+  - mtl >=2.2 && <2.3
+  - lifted-base >=0.2 && <0.3
+  - monad-control
+  - transformers
+  - transformers-base
+executables:
+  aradia-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - base
+    - aradia
+tests:
+  aradia-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - base
+    - aradia

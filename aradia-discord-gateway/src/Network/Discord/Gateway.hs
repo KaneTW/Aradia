@@ -86,7 +86,6 @@ module Network.Discord.Gateway where
           Right event -> do
             liftIO $ print event
             feed m event
-        liftIO $ putStrLn "Stepping app"
         eventStream Running m
       Heartbeat sq -> do
         setSequence sq
@@ -97,7 +96,6 @@ module Network.Discord.Gateway where
       HeartbeatAck   -> eventStream Running m
       _              -> do
         liftIO $ errorM "Discord-hs.Gateway.Error" "InvalidPacket"
-        liftIO $ putStrLn "DYING RIP ME"
         eventStream InvalidDead m
   eventStream InvalidReconnect m = eventStream InvalidDead m
   eventStream InvalidDead      _ = liftIO $ errorM "Discord-hs.Gateway.Error" "Bot died"
@@ -105,9 +103,7 @@ module Network.Discord.Gateway where
   step :: DiscordGate b m => m Payload
   step = do
     conn <- connection
-    liftIO $ putStrLn "Waiting for data"
     msg' <- liftIO $ receiveData conn
-    liftIO $ putStrLn "Got data"
     case eitherDecode msg' of
       Right msg -> return msg
       Left  err -> 

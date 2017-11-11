@@ -37,6 +37,13 @@ library:
   - monad-control
   - transformers
   - transformers-base
+  - megaparsec >=6.2
+  - cryptohash
+  - bytestring
+  - random-source
+  - random-fu
+  - random
+  - text-format
 executables:
   aradia-exe:
     main: Main.hs

@@ -41,7 +41,8 @@ module Network.Discord.Rest.Prelude where
             infoM "Discord-hs.Rest" "Done waiting"
           return ()
 
-  instance (MonadIO m, DiscordRest m) => MonadHttp m where
+  -- lazy. fix this.
+  instance {-# INCOHERENT #-} (MonadIO m, DiscordRest m) => MonadHttp m where
     handleHttpException = liftIO . throwIO
 
   -- | Class over which performing a data retrieval action is defined

@@ -8,10 +8,11 @@ import Network.Discord
 
 import Aradia.Command
 import Aradia.Command.Debug
+import Aradia.Command.Games
 import Aradia.Types
 
 type AradiaApp =
-  MessageCreateEvent :> Command Ping
+  MessageCreateEvent :> (Command Ping :<>: Command Ship)
 
 instance EventHandler AradiaApp (AradiaT IO)
 

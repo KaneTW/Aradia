@@ -7,7 +7,6 @@ import Control.Monad.Trans.Class
 import Data.Proxy
 import Data.Text (Text)
 import qualified Data.Text as T
-import GHC.TypeLits
 
 import Network.Discord
 
@@ -33,9 +32,3 @@ instance AradiaCommand a => EventMap (Command a) (DiscordApp (AradiaT IO)) where
         return $ T.stripPrefix (prefix `T.append` commandName p) c
 
 
-data Ping
-
-instance AradiaCommand Ping where
-  commandName _ = "ping"
-  handleMessage _ Message{messageChannel = chan} text
-    = void . doFetch $ CreateMessage chan ("pong! you wrote ```\n" `T.append` text `T.append` "\n```") Nothing

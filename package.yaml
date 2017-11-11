@@ -24,6 +24,7 @@ library:
   exposed-modules:
   - Aradia
   - Aradia.Command
+  - Aradia.Command.Debug
   - Aradia.Types
   dependencies:          
   - base >=4.7 && <5
@@ -40,17 +41,6 @@ executables:
   aradia-exe:
     main: Main.hs
     source-dirs: app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - base
-    - aradia
-tests:
-  aradia-test:
-    main: Spec.hs
-    source-dirs: test
     ghc-options:
     - -threaded
     - -rtsopts

@@ -7,6 +7,7 @@ import Data.Text
 import Network.Discord
 
 import Aradia.Command
+import Aradia.Command.Debug
 import Aradia.Types
 
 type AradiaApp =

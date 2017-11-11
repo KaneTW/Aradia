@@ -61,7 +61,7 @@ instance AradiaCommand Ship where
   handleMessage _ Message{messageChannel = chan} text = respond chan response
     where
       response = case parse parseRelationship "input" text  of
-        Left e -> format' "{}\n\n{}" (parseErrorTextPretty e, "Usage: A ♥/♦/♣ B, A ♣ B ♣ C" :: Text)
+        Left e -> format' "{}\n{}" (parseErrorTextPretty e, "Usage: A ♥/♦/♣ B, A ♣ B ♣ C" :: Text)
         Right r -> format' "{}\n{} ==> {}%" (printRelationship r
                                             , asBars 10 $ compat r
                                             , fixed 0 (100 * compat r))

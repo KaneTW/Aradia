@@ -39,7 +39,7 @@ parseRelationship = choice [try pale, try calignious, try ashen, flushed]
                    , symbol "<3" <* C.spaceChar ] -- parsing ambiguity with "<3<"
     diamond = choice [ hidden $ symbol ":diamonds:"
                      , symbol "♦"
-                     ,  symbol "<>" ]
+                     , symbol "<>" ]
     spade = choice [ hidden $ symbol ":spades:"
                    , symbol "♠"
                    , symbol "<3<" ]
@@ -62,7 +62,7 @@ instance AradiaCommand Ship where
     where
       response = case parse parseRelationship "input" text  of
         Left e -> format' "{}\n{}" (parseErrorTextPretty e, "Usage: A ♥/♦/♣ B, A ♣ B ♣ C" :: Text)
-        Right r -> format' "{}\n{} ==> {}%" (printRelationship r
+        Right r -> format' "{}\n`{}` ==> {}%" (printRelationship r
                                             , asBars 10 $ compat r
                                             , fixed 0 (100 * compat r))
       compat r = fst . random $ rng r :: Double

@@ -36,7 +36,7 @@ parseRelationship = choice [try pale, try calignious, try ashen, flushed]
                    , hidden $ symbol ":hearts:"
                    , hidden $ symbol "❤"
                    , symbol "♥"
-                   , symbol "<3" ] <* C.spaceChar -- parsing ambiguity with "<3<"
+                   , symbol "<3" <* C.spaceChar ] -- parsing ambiguity with "<3<"
     diamond = choice [ hidden $ symbol ":diamonds:"
                      , symbol "♦"
                      ,  symbol "<>" ]

@@ -25,6 +25,8 @@ type instance ConfigFor (Command a) cfg = (HasAradiaConfig cfg, ConfigFor a cfg)
 
 class AradiaCommand a where
   commandName :: Proxy (Command a) -> Text
+  commandUsage :: Proxy (Command a) -> Text
+  commandDescription :: Proxy (Command a) -> Text
   handleMessage :: ConfigFor (Command a) cfg
                 => Proxy (Command a) -> Message -> Text -> DiscordApp (AradiaT cfg IO) ()
   

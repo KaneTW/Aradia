@@ -59,10 +59,12 @@ type instance ConfigFor Ship cfg = ()
 
 instance AradiaCommand Ship where
   commandName _ = "ship"
-  handleMessage _ Message{messageChannel = chan} text = respond chan response
+  commandUsage _ = "<a> ♥/♦/♣ <b>, <a> ♣ <b> ♣ <c>"
+  commandDescription _ = "checks the shipping wall"
+  handleMessage p Message{messageChannel = chan} text = respond chan response
     where
       response = case parse parseRelationship "input" text  of
-        Left e -> format' "{}\n{}" (parseErrorTextPretty e, "Usage: A ♥/♦/♣ B, A ♣ B ♣ C" :: Text)
+        Left e -> format' "{}\nUsage: {}" (parseErrorTextPretty e, commandUsage p)
         Right r -> format' "{}\n`{}` ==> {}%" (printRelationship r
                                             , asBars 10 $ compat r
                                             , fixed 0 (100 * compat r))

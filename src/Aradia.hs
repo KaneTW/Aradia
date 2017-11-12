@@ -9,14 +9,17 @@ import Network.Discord
 import Aradia.Auth
 import Aradia.Command
 import Aradia.Command.Debug
+import Aradia.Command.Help
 import Aradia.Command.Games
 import Aradia.Command.Plex
 import Aradia.Types
 
+type Commands = GuildOwnerAuth :> Command Ping
+              :<>: Command Ship
+              :<>: Command PlexInvite
+
 type AradiaApp =
-  MessageCreateEvent :> (GuildOwnerAuth :> Command Ping
-                         :<>: Command Ship
-                         :<>: Command PlexInvite)
+  MessageCreateEvent :> (Commands :<>: Command (Help Commands))
 
 instance ConfigFor AradiaApp cfg => EventHandler AradiaApp (AradiaT cfg IO)
 

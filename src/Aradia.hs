@@ -6,6 +6,7 @@ import Data.Proxy
 import Data.Text
 import Network.Discord
 
+import Aradia.Auth
 import Aradia.Command
 import Aradia.Command.Debug
 import Aradia.Command.Games
@@ -13,7 +14,7 @@ import Aradia.Command.Plex
 import Aradia.Types
 
 type AradiaApp =
-  MessageCreateEvent :> (Command Ping
+  MessageCreateEvent :> (GuildOwnerAuth :> Command Ping
                          :<>: Command Ship
                          :<>: Command PlexInvite)
 

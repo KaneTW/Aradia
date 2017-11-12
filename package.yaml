@@ -25,6 +25,7 @@ library:
   source-dirs: src
   exposed-modules:
   - Aradia
+  - Aradia.Auth
   - Aradia.Command
   - Aradia.Command.Debug
   - Aradia.Command.Games

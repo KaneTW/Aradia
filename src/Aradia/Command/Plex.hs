@@ -31,7 +31,8 @@ type instance ConfigFor PlexInvite cfg = HasPlexConfig cfg
 instance AradiaCommand PlexInvite where
   commandName _ = "plexinvite"
   handleMessage _ Message{messageChannel = chan} text
-    = catch (doPlexRequest text) (\(e :: HttpException) -> respond chan "couldn't invite you, sorry")
+    | T.null text = respond chan "Usage: plexinvite <email or username>"
+    | otherwise = catch (doPlexRequest text) (\(e :: HttpException) -> respond chan "couldn't invite you, sorry")
     where
       baseUrl = https "plex.tv" /: "api"
       validateUrl = baseUrl /: "users" /: "validate"

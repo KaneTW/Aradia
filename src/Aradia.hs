@@ -9,12 +9,15 @@ import Network.Discord
 import Aradia.Command
 import Aradia.Command.Debug
 import Aradia.Command.Games
+import Aradia.Command.Plex
 import Aradia.Types
 
 type AradiaApp =
-  MessageCreateEvent :> (Command Ping :<>: Command Ship)
+  MessageCreateEvent :> (Command Ping
+                         :<>: Command Ship
+                         :<>: Command PlexInvite)
 
-instance EventHandler AradiaApp (AradiaT IO)
+instance ConfigFor AradiaApp cfg => EventHandler AradiaApp (AradiaT cfg IO)
 
-runAradia :: AradiaConfig -> IO ()
-runAradia = runReaderT . runAradiaT $ runBot (Proxy :: Proxy (AradiaT IO AradiaApp))
+runAradia :: forall cfg. ConfigFor AradiaApp cfg => cfg -> IO ()
+runAradia = runReaderT . runAradiaT $ runBot (Proxy :: Proxy (AradiaT cfg IO AradiaApp))

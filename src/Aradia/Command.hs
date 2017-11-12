@@ -21,12 +21,15 @@ import Aradia.Types
 
 data Command a
 
+type instance ConfigFor (Command a) cfg = (HasAradiaConfig cfg, ConfigFor a cfg)
+
 class AradiaCommand a where
   commandName :: Proxy (Command a) -> Text
-  handleMessage :: Proxy (Command a) -> Message -> Text -> DiscordApp (AradiaT IO) ()
+  handleMessage :: ConfigFor (Command a) cfg
+                => Proxy (Command a) -> Message -> Text -> DiscordApp (AradiaT cfg IO) ()
   
 
-instance AradiaCommand a => EventMap (Command a) (DiscordApp (AradiaT IO)) where
+instance (AradiaCommand a, ConfigFor (Command a) cfg) => EventMap (Command a) (DiscordApp (AradiaT cfg IO)) where
   type Domain (Command a) = Message
   type Codomain (Command a) = ()
 

@@ -19,12 +19,16 @@ default-extensions:
   - GeneralizedNewtypeDeriving
   - OverloadedStrings
   - TypeOperators
+  - ConstraintKinds
+  - ScopedTypeVariables
 library:
   source-dirs: src
   exposed-modules:
   - Aradia
   - Aradia.Command
   - Aradia.Command.Debug
+  - Aradia.Command.Games
+  - Aradia.Command.Plex
   - Aradia.Types
   dependencies:          
   - base >=4.7 && <5
@@ -44,6 +48,10 @@ library:
   - random-fu
   - random
   - text-format
+  - template-haskell
+  - data-default
+  - aeson
+  - req
 executables:
   aradia-exe:
     main: Main.hs
@@ -55,3 +63,5 @@ executables:
     dependencies:
     - base
     - aradia
+    - lens
+    - text

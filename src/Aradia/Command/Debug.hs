@@ -10,8 +10,12 @@ import Aradia.Types
 
 data Ping
 
+type instance ConfigFor Ping cfg = ()
+
 instance AradiaCommand Ping where
   commandName _ = "ping"
   handleMessage _ Message{messageChannel = chan} text
     = void . doFetch $ CreateMessage chan ("pong! you wrote ```\n" `T.append` text `T.append` "\n```") Nothing
+
+
 

@@ -17,7 +17,6 @@ import Aradia.Command
 import Aradia.Types
 import Aradia.Utils
 
-
 data Relationship = Flushed Text Text
                   | Pale Text Text
                   | Calignious Text Text
@@ -55,6 +54,8 @@ printRelationship (Calignious l r) = T.unwords [l, "♠", r]
 printRelationship (Ashen l m r) = T.unwords [l, "♣", m, "♣", r]
 
 data Ship
+
+type instance ConfigFor Ship cfg = ()
 
 instance AradiaCommand Ship where
   commandName _ = "ship"

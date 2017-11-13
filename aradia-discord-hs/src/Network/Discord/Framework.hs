@@ -62,10 +62,11 @@ module Network.Discord.Framework where
     | otherwise = (a, b): modify a' b' xs
   modify a' b' [] = [(a', b')]
 
+
   instance DiscordAuth m => DiscordRest (DiscordApp m) where
     getRateLimit f = lookup' (hash f) =<< get rateLimits
       where
-        lookup' :: (Eq a, Monad m) => a -> [(a, b)] -> m (Maybe b)
+        lookup' :: (Eq a, Monad n) => a -> [(a, b)] -> n (Maybe b)
         lookup' a' ((a, b):xs)
           | a' == a   = return (Just b)
           | otherwise = lookup' a' xs

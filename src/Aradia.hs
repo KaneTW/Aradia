@@ -17,6 +17,7 @@ import Aradia.Types
 type Commands = GuildOwnerAuth :> Command Ping
               :<>: Command Ship
               :<>: Command PlexInvite
+              :<>: Command Roll
 
 type AradiaApp =
   MessageCreateEvent :> (Commands :<>: Command (Help Commands))

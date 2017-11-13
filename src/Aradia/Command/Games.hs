@@ -1,15 +1,19 @@
 module Aradia.Command.Games where
 
 import Control.Monad
+import Control.Monad.IO.Class
 
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Text.Format
+import Data.Random
+import Data.Random.Distribution.Uniform
 
 import Network.Discord
 
 import Text.Megaparsec
 import qualified Text.Megaparsec.Char as C
+import qualified Text.Megaparsec.Char.Lexer as L
 
 import System.Random
 
@@ -64,10 +68,39 @@ instance AradiaCommand Ship where
   handleMessage p Message{messageChannel = chan} text = respond chan response
     where
       response = case parse parseRelationship "input" text  of
-        Left e -> format' "{}\nUsage: {}" (parseErrorTextPretty e, commandUsage p)
+        Left e -> format' "{}\nusage: {}" (parseErrorTextPretty e, commandUsage p)
         Right r -> format' "{}\n`{}` ==> {}%" (printRelationship r
                                             , asBars 10 $ compat r
                                             , fixed 0 (100 * compat r))
       compat r = fst . random $ rng r :: Double
       rng r = pureMTFromText $ printRelationship r
         
+
+data Dice = Dice Int Int
+  deriving (Show, Eq)
+
+parseDice :: Parser Dice
+parseDice = do
+  l <- L.decimal
+  when (l < 1) $ fail "dice count must be over 0"
+  C.string "d"
+  r <- L.decimal
+  when (r < 2) $ fail "dice sides must be over 1"
+  return $ Dice l r
+
+rollDice :: MonadRandom m => Dice -> m [Int]
+rollDice (Dice n m) = replicateM n $ sample (Uniform 1 m)
+
+data Roll
+
+type instance ConfigFor Roll cfg = ()
+
+instance AradiaCommand Roll where
+  commandName _ = "roll"
+  commandUsage _ = "<n>d<m>"
+  commandDescription _ = "rolls n m-sided dice"
+  handleMessage p Message{messageChannel = chan} text = response >>= respond chan 
+    where
+      response = case parse parseDice "input" text  of
+        Left e -> return $ format' "{}\nusage: {}" (parseErrorTextPretty e, commandUsage p)
+        Right r -> format' "{}" <$> liftIO (rollDice r)

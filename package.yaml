@@ -21,6 +21,7 @@ default-extensions:
   - TypeOperators
   - ConstraintKinds
   - ScopedTypeVariables
+  - GADTs
 library:
   source-dirs: src
   exposed-modules:
@@ -30,6 +31,7 @@ library:
   - Aradia.Command.Debug
   - Aradia.Command.Games
   - Aradia.Command.Plex
+  - Aradia.Persistent
   - Aradia.Types
   dependencies:          
   - base >=4.7 && <5
@@ -53,6 +55,8 @@ library:
   - data-default
   - aeson
   - req
+  - persistent
+  - resource-pool
 executables:
   aradia-exe:
     main: Main.hs

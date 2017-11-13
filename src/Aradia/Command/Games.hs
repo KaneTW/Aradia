@@ -103,4 +103,4 @@ instance AradiaCommand Roll where
     where
       response = case parse parseDice "input" text  of
         Left e -> return $ format' "{}\nusage: {}" (parseErrorTextPretty e, commandUsage p)
-        Right r -> format' "{}" <$> liftIO (rollDice r)
+        Right r -> T.unwords . map (T.pack . show) <$> liftIO (rollDice r)

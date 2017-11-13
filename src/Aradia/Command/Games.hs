@@ -76,7 +76,7 @@ instance AradiaCommand Ship where
       rng r = pureMTFromText $ printRelationship r
         
 
-data Dice = Dice Int Int
+data Dice = Dice Int Integer
   deriving (Show, Eq)
 
 parseDice :: Parser Dice
@@ -88,7 +88,7 @@ parseDice = do
   when (r < 2) $ fail "dice sides must be over 1"
   return $ Dice l r
 
-rollDice :: MonadRandom m => Dice -> m [Int]
+rollDice :: MonadRandom m => Dice -> m [Integer]
 rollDice (Dice n m) = replicateM n $ sample (Uniform 1 m)
 
 data Roll

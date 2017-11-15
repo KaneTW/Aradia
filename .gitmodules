@@ -1,0 +1,3 @@
+[submodule "aradia-backend"]
+	path = aradia-backend
+	url = git@github.com:KaneTW/aradia-backend.git
